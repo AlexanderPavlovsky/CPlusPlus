@@ -1,0 +1,454 @@
+#include "stdafx.h"
+#include <iostream>
+#include <string> 
+#include <cmath>
+#include <vector>
+
+using namespace std;
+
+struct product
+{
+	string productName;
+	double productPrice;
+	int productVariety;
+	int productReleaseDay;
+	int productReleaseMonth;
+	int productReleaseYear;
+	int productLatestDay;
+	int productLatestMonth;
+	int productLatestYear;
+	int productTerm;
+};
+
+void inputStruct(product &CreatItems)
+{
+	int a, b, c;
+	cout << "Enter product's name: " << endl;
+	cin >> CreatItems.productName;
+	cout << "Enter product's price: " << endl;
+	cin >> CreatItems.productPrice;
+	while (CreatItems.productPrice <= 0)
+	{
+		cout << "Re-enter product's price: ";
+		cin >> CreatItems.productPrice;
+	}
+	cout << "Enter product's variety: " << endl;
+	cin >> CreatItems.productVariety;
+	while (CreatItems.productVariety <= 0)
+	{
+		cout << "Re-enter product's variety: ";
+		cin >> CreatItems.productVariety;
+	}
+	cout << "Enter product's release date: " << endl;
+	cout << "Day: ";
+	cin >> CreatItems.productReleaseDay;
+	while (CreatItems.productReleaseDay <= 0 || CreatItems.productReleaseDay > 30)
+	{
+		cout << "Re-enter product's release day: ";
+		cin >> CreatItems.productReleaseDay;
+	}
+	cout << "Month: ";
+	cin >> CreatItems.productReleaseMonth;
+	while (CreatItems.productReleaseMonth <= 0 || CreatItems.productReleaseMonth > 12)
+	{
+		cout << "Re-enter product's release month: ";
+		cin >> CreatItems.productReleaseMonth;
+	}
+	cout << "Year: ";
+	cin >> CreatItems.productReleaseYear;
+	while (CreatItems.productReleaseYear <= 0)
+	{
+		cout << "Re-enter product's release year: ";
+		cin >> CreatItems.productReleaseYear;
+	}
+	cout << "Enter product's latest date: " << endl;
+	cout << "Day: ";
+	cin >> CreatItems.productLatestDay;
+	while (CreatItems.productLatestDay <= 0 || CreatItems.productLatestDay > 30)
+	{
+		cout << "Re-enter product's latest day: ";
+		cin >> CreatItems.productLatestDay;
+	}
+	cout << "Month: ";
+	cin >> CreatItems.productLatestMonth;
+	while (CreatItems.productLatestMonth <= 0 || CreatItems.productLatestMonth > 12)
+	{
+		cout << "Re-enter product's latest month: ";
+		cin >> CreatItems.productLatestMonth;
+	}
+	cout << "Year: ";
+	cin >> CreatItems.productLatestYear;
+	while (CreatItems.productLatestYear <= 0)
+	{
+		cout << "Re-enter product's latest year: ";
+		cin >> CreatItems.productLatestYear;
+	}
+	a = CreatItems.productReleaseDay - CreatItems.productLatestDay;
+	b = CreatItems.productReleaseMonth - CreatItems.productLatestMonth;
+	c = CreatItems.productReleaseYear - CreatItems.productLatestYear;
+	CreatItems.productTerm = (fabs(a) + fabs(b * 30) + fabs((c * 30) * 365)) - 1;
+
+}
+void showStruct(vector<product>Items, int quantity)
+{
+	for (int i = 0; i < quantity; i++)
+		cout << "Product name: " << Items[i].productName << "\nProduct price: " << Items[i].productPrice << "\nProduct term " << Items[i].productTerm << " days" << "\nProduct variety: " << Items[i].productVariety << "\nProduct release date: " << Items[i].productReleaseDay << "." << Items[i].productReleaseMonth << "." << Items[i].productReleaseYear << "\nProduct latest date: " << Items[i].productLatestDay << "." << Items[i].productLatestMonth << "." << Items[i].productLatestYear << endl;
+}
+void addStruct(vector<product>&Items, int quantity, int &newQuantity)
+{
+	product temp;
+	product CreatItems;
+	int number;
+	cout << "How many products are added to the structure: ";
+	cin >> number;
+	while (number <= 0)
+	{
+		cout << "Re-enter the amount of added structures: ";
+		cin >> number;
+	}
+	newQuantity = quantity + number;
+	for (int i = quantity; i < newQuantity; i++)
+		Items.push_back(temp);
+	for (int i = quantity; i < newQuantity; i++)
+	{
+		inputStruct(CreatItems);
+		Items[i] = CreatItems;
+	}
+}
+void searchStruct(vector<product>Items, int newQuantity)
+{
+	int choice;
+	string name;
+	double price;
+	int variety;
+	int releaseDay;
+	int releaseMonth;
+	int releaseYear;
+	int latestDay;
+	int latestMonth;
+	int latestYear;
+	int term;
+	cout << "By what criteria do you want to find the goods: \n1)Name \n2)Price \n3)Variety \n4)Release date \n5)Latest date \n6)Term" << endl;
+	cin >> choice;
+	while (choice <= 0 || choice > 6)
+	{
+		cout << "Re-enter your choice: ";
+		cin >> choice;
+	}
+	if (choice == 1)
+	{
+		cout << "Enter product's name: ";
+		cin >> name;
+		for (int i = 0; i < newQuantity; i++)
+			if (name == Items[i].productName)
+				cout << "Product name: " << Items[i].productName << "\nProduct price: " << Items[i].productPrice << "\nProduct term " << Items[i].productTerm << " days" << "\nProduct variety: " << Items[i].productVariety << "\nProduct release date: " << Items[i].productReleaseDay << "." << Items[i].productReleaseMonth << "." << Items[i].productReleaseYear << "\nProduct latest date: " << Items[i].productLatestDay << "." << Items[i].productLatestMonth << "." << Items[i].productLatestYear << endl;
+	}
+	else if (choice == 2)
+	{
+		cout << "Enter product's price: ";
+		cin >> price;
+		while (price <= 0)
+		{
+			cout << "Re-enter price: ";
+			cin >> price;
+		}
+		for (int i = 0; i < newQuantity; i++)
+			if (price == Items[i].productPrice)
+				cout << "Product name: " << Items[i].productName << "\nProduct price: " << Items[i].productPrice << "\nProduct term " << Items[i].productTerm << " days" << "\nProduct variety: " << Items[i].productVariety << "\nProduct release date: " << Items[i].productReleaseDay << "." << Items[i].productReleaseMonth << "." << Items[i].productReleaseYear << "\nProduct latest date: " << Items[i].productLatestDay << "." << Items[i].productLatestMonth << "." << Items[i].productLatestYear << endl;
+	}
+	else if (choice == 3)
+	{
+		cout << "Enter product's variety: ";
+		cin >> variety;
+		while (variety <= 0)
+		{
+			cout << "Re-enter variety: ";
+			cin >> variety;
+		}
+		for (int i = 0; i < newQuantity; i++)
+			if (variety == Items[i].productVariety)
+				cout << "Product name: " << Items[i].productName << "\nProduct price: " << Items[i].productPrice << "\nProduct term " << Items[i].productTerm << " days" << "\nProduct variety: " << Items[i].productVariety << "\nProduct release date: " << Items[i].productReleaseDay << "." << Items[i].productReleaseMonth << "." << Items[i].productReleaseYear << "\nProduct latest date: " << Items[i].productLatestDay << "." << Items[i].productLatestMonth << "." << Items[i].productLatestYear << endl;
+	}
+	else if (choice == 4)
+	{
+		cout << "Enter product release date: " << endl;
+		cout << "Day: ";
+		cin >> releaseDay;
+		while (releaseDay <= 0 || releaseDay > 30)
+		{
+			cout << "Re-enter day: ";
+			cin >> releaseDay;
+		}
+		cout << "Month: ";
+		cin >> releaseMonth;
+		while (releaseMonth <= 0 || releaseMonth > 12)
+		{
+			cout << "Re-enter month: ";
+			cin >> releaseMonth;
+		}
+		cout << "Year: ";
+		cin >> releaseYear;
+		while (releaseYear <= 0)
+		{
+			cout << "Re-enter year: ";
+			cin >> releaseYear;
+		}
+		for (int i = 0; i < newQuantity; i++)
+			if (releaseDay == Items[i].productReleaseDay && releaseMonth == Items[i].productReleaseMonth && releaseYear == Items[i].productReleaseYear)
+				cout << "Product name: " << Items[i].productName << "\nProduct price: " << Items[i].productPrice << "\nProduct term " << Items[i].productTerm << " days" << "\nProduct variety: " << Items[i].productVariety << "\nProduct release date: " << Items[i].productReleaseDay << "." << Items[i].productReleaseMonth << "." << Items[i].productReleaseYear << "\nProduct latest date: " << Items[i].productLatestDay << "." << Items[i].productLatestMonth << "." << Items[i].productLatestYear << endl;
+	}
+	else if (choice == 5)
+	{
+		cout << "Enter product's latest date: " << endl;
+		cout << "Day: ";
+		cin >> latestDay;
+		while (latestDay <= 0 || latestDay > 30)
+		{
+			cout << "Re-enter day: ";
+			cin >> latestDay;
+		}
+		cout << "Month: ";
+		cin >> latestMonth;
+		while (latestMonth <= 0 || latestMonth > 12)
+		{
+			cout << "Re-enter month: ";
+			cin >> latestMonth;
+		}
+		cout << "Year: ";
+		cin >> latestYear;
+		while (latestYear <= 0)
+		{
+			cout << "Re-enter year: ";
+			cin >> latestYear;
+		}
+		for (int i = 0; i < newQuantity; i++)
+			if (latestDay == Items[i].productLatestDay && latestMonth == Items[i].productLatestMonth && latestYear == Items[i].productLatestYear)
+				cout << "Product name: " << Items[i].productName << "\nProduct price: " << Items[i].productPrice << "\nProduct term " << Items[i].productTerm << " days" << "\nProduct variety: " << Items[i].productVariety << "\nProduct release date: " << Items[i].productReleaseDay << "." << Items[i].productReleaseMonth << "." << Items[i].productReleaseYear << "\nProduct latest date: " << Items[i].productLatestDay << "." << Items[i].productLatestMonth << "." << Items[i].productLatestYear << endl;
+	}
+	else
+	{
+		cout << "Enter product's term: ";
+		cin >> term;
+		while (term <= 0)
+		{
+			cout << "Re-enter term:";
+			cin >> term;
+		}
+		for (int i = 0; i < newQuantity; i++)
+			if (term == Items[i].productTerm)
+				cout << "Product name: " << Items[i].productName << "\nProduct price: " << Items[i].productPrice << "\nProduct term " << Items[i].productTerm << " days" << "\nProduct variety: " << Items[i].productVariety << "\nProduct release date: " << Items[i].productReleaseDay << "." << Items[i].productReleaseMonth << "." << Items[i].productReleaseYear << "\nProduct latest date: " << Items[i].productLatestDay << "." << Items[i].productLatestMonth << "." << Items[i].productLatestYear << endl;
+	}
+}
+
+void sortingStruct(vector<product>Items, int newQuantity)
+{
+	int choice1;
+	int *number = new int[newQuantity];
+	double *sortingPrice = new double[newQuantity];
+	int *sortingVariety = new int[newQuantity];
+	int *sortingReleaseDate = new int[newQuantity];
+	int *sortingLatestDate = new int[newQuantity];
+	int *sortingTerm = new int[newQuantity];
+	bool check = false;
+	cout << "By what criteria do you want to sort the goods: \n1)Name \n2)Price \n3)Variety \n4)Release date \n5)Latest date \n6)Term" << endl;
+	cin >> choice1;
+	while (choice1 <= 0 || choice1 > 6)
+	{
+		cout << "Re-enter your choice: ";
+		cin >> choice1;
+	}
+	if (choice1 == 1)
+	{
+		for (int i = 0; i < newQuantity; i++)
+		{
+			product sorting;
+			for (int j = i; j < newQuantity; j++)
+			{
+				if (Items[i].productName > Items[j].productName)
+				{
+					sorting = Items[i];
+					Items[i] = Items[j];
+					Items[j] = sorting;
+				}
+			}
+		}
+		for (int i = 0; i < newQuantity; i++)
+			cout << "Product name: " << Items[i].productName << "\nProduct price: " << Items[i].productPrice << "\nProduct term " << Items[i].productTerm << " days" << "\nProduct variety: " << Items[i].productVariety << "\nProduct release date: " << Items[i].productReleaseDay << "." << Items[i].productReleaseMonth << "." << Items[i].productReleaseYear << "\nProduct latest date: " << Items[i].productLatestDay << "." << Items[i].productLatestMonth << "." << Items[i].productLatestYear << endl;
+	}
+	else if (choice1 == 2)
+	{
+		for (int i = 0; i < newQuantity; i++)
+			sortingPrice[i] = Items[i].productPrice;
+		for (int i = 1; i < newQuantity; ++i)
+			for (int j = 0; j < newQuantity - i; j++)
+				if (sortingPrice[j] > sortingPrice[j + 1])
+				{
+					int temp1 = sortingPrice[j];
+					sortingPrice[j] = sortingPrice[j + 1];
+					sortingPrice[j + 1] = temp1;
+				}
+		for (int i = 0; i < newQuantity; i++)
+			for (int j = 0; j < newQuantity; j++)
+				if (sortingPrice[i] == Items[j].productPrice)
+					number[i] = j;
+		for (int i = 0; i < newQuantity; i++)
+			cout << "Product name: " << Items[number[i]].productName << "\nProduct price: " << Items[number[i]].productPrice << "\nProduct term " << Items[number[i]].productTerm << " days" << "\nProduct variety: " << Items[number[i]].productVariety << "\nProduct release date: " << Items[number[i]].productReleaseDay << "." << Items[number[i]].productReleaseMonth << "." << Items[number[i]].productReleaseYear << "\nProduct latest date: " << Items[number[i]].productLatestDay << "." << Items[number[i]].productLatestMonth << "." << Items[number[i]].productLatestYear << endl;
+	}
+	else if (choice1 == 3)
+	{
+		for (int i = 0; i < newQuantity; i++)
+			sortingVariety[i] = Items[i].productVariety;
+		for (int i = 1; i < newQuantity; ++i)
+			for (int j = 0; j < newQuantity - i; j++)
+				if (sortingVariety[j] > sortingVariety[j + 1])
+				{
+					int temp2 = sortingVariety[j];
+					sortingVariety[j] = sortingVariety[j + 1];
+					sortingVariety[j + 1] = temp2;
+				}
+		for(int i = 0; i < newQuantity; i++)
+			for (int j = 0; j < newQuantity; j++)
+				if (sortingVariety[i] == Items[j].productVariety)
+					number[i] = j;
+		for (int i = 0; i < newQuantity; i++)
+			cout << "Product name: " << Items[number[i]].productName << "\nProduct price: " << Items[number[i]].productPrice << "\nProduct term " << Items[number[i]].productTerm << " days" << "\nProduct variety: " << Items[number[i]].productVariety << "\nProduct release date: " << Items[number[i]].productReleaseDay << "." << Items[number[i]].productReleaseMonth << "." << Items[number[i]].productReleaseYear << "\nProduct latest date: " << Items[number[i]].productLatestDay << "." << Items[number[i]].productLatestMonth << "." << Items[number[i]].productLatestYear << endl;
+	}
+	else if (choice1 == 4)
+	{
+		for (int i = 1; i < newQuantity; i++)
+		{
+			if (Items[i - 1].productReleaseYear == Items[i].productReleaseYear)
+			{
+				check = true;
+			}
+		}
+		if (check == true)
+			for (int i = 0; i < newQuantity; i++)
+				sortingReleaseDate[i] = (Items[i].productReleaseDay + Items[i].productReleaseMonth + Items[i].productReleaseYear);
+		else
+			for (int i = 0; i < newQuantity; i++)
+				sortingReleaseDate[i] = Items[i].productReleaseYear;
+		for (int i = 1; i < newQuantity; ++i)
+			for (int j = 0; j < newQuantity - i; j++)
+				if (sortingReleaseDate[j] > sortingReleaseDate[j + 1])
+				{
+					int temp3 = sortingReleaseDate[j];
+					sortingReleaseDate[j] = sortingReleaseDate[j + 1];
+					sortingReleaseDate[j + 1] = temp3;
+				}
+		for (int i = 0; i < newQuantity; i++)
+			for (int j = 0; j < newQuantity; j++)
+			{
+				if (check == true)
+				{
+					if (sortingReleaseDate[i] == (Items[j].productReleaseDay + Items[j].productReleaseMonth + Items[j].productReleaseYear))
+						number[i] = j;
+				}
+				else
+				{
+					if (sortingReleaseDate[i] == Items[j].productReleaseYear)
+						number[i] = j;
+				}
+			}
+		for (int i = 0; i < newQuantity; i++)
+			cout << "Product name: " << Items[number[i]].productName << "\nProduct price: " << Items[number[i]].productPrice << "\nProduct term " << Items[number[i]].productTerm << " days" << "\nProduct variety: " << Items[number[i]].productVariety << "\nProduct release date: " << Items[number[i]].productReleaseDay << "." << Items[number[i]].productReleaseMonth << "." << Items[number[i]].productReleaseYear << "\nProduct latest date: " << Items[number[i]].productLatestDay << "." << Items[number[i]].productLatestMonth << "." << Items[number[i]].productLatestYear << endl;
+	}
+	else if (choice1 == 5)
+	{
+		for (int i = 1; i < newQuantity; i++)
+		{
+			if (Items[i - 1].productLatestYear == Items[i].productLatestYear)
+			{
+				check = true;
+			}
+		}
+		if (check == true)
+			for (int i = 0; i < newQuantity; i++)
+				sortingLatestDate[i] = (Items[i].productLatestDay + Items[i].productLatestMonth + Items[i].productLatestYear);
+		else
+			for (int i = 0; i < newQuantity; i++)
+				sortingLatestDate[i] = Items[i].productLatestYear;
+		for (int i = 1; i < newQuantity; ++i)
+			for (int j = 0; j < newQuantity - i; j++)
+				if (sortingLatestDate[j] > sortingLatestDate[j + 1])
+				{
+					int temp4 = sortingLatestDate[j];
+					sortingLatestDate[j] = sortingLatestDate[j + 1];
+					sortingLatestDate[j + 1] = temp4;
+				}
+		for (int i = 0; i < newQuantity; i++)
+			for (int j = 0; j < newQuantity; j++)
+			{
+				if (check == true)
+				{
+					if (sortingLatestDate[i] == (Items[j].productLatestDay + Items[j].productLatestMonth + Items[j].productLatestYear))
+						number[i] = j;
+				}
+				else
+				{
+					if(sortingLatestDate[i] == Items[j].productLatestYear)
+						number[i] = j;
+				}
+			}
+		for (int i = 0; i < newQuantity; i++)
+			cout << "Product name: " << Items[number[i]].productName << "\nProduct price: " << Items[number[i]].productPrice << "\nProduct term " << Items[number[i]].productTerm << " days" << "\nProduct variety: " << Items[number[i]].productVariety << "\nProduct release date: " << Items[number[i]].productReleaseDay << "." << Items[number[i]].productReleaseMonth << "." << Items[number[i]].productReleaseYear << "\nProduct latest date: " << Items[number[i]].productLatestDay << "." << Items[number[i]].productLatestMonth << "." << Items[number[i]].productLatestYear << endl;
+	}
+	else
+	{
+		for (int i = 0; i < newQuantity; i++)
+			sortingTerm[i] = Items[i].productTerm;
+		for (int i = 1; i < newQuantity; ++i)
+			for (int j = 0; j < newQuantity - i; j++)
+				if (sortingTerm[j] > sortingTerm[j + 1])
+				{
+					int temp5 = sortingTerm[j];
+					sortingTerm[j] = sortingTerm[j + 1];
+					sortingTerm[j + 1] = temp5;
+				}
+		for (int i = 0; i < newQuantity; i++)
+			for (int j = 0; j < newQuantity; j++)
+				if (sortingTerm[i] == Items[j].productTerm)
+					number[i] = j;
+		for (int i = 0; i < newQuantity; i++)
+			cout << "Product name: " << Items[number[i]].productName << "\nProduct price: " << Items[number[i]].productPrice << "\nProduct term " << Items[number[i]].productTerm << " days" << "\nProduct variety: " << Items[number[i]].productVariety << "\nProduct release date: " << Items[number[i]].productReleaseDay << "." << Items[number[i]].productReleaseMonth << "." << Items[number[i]].productReleaseYear << "\nProduct latest date: " << Items[number[i]].productLatestDay << "." << Items[number[i]].productLatestMonth << "." << Items[number[i]].productLatestYear << endl;
+	}
+	delete number;
+	delete sortingPrice;
+	delete sortingVariety;
+	delete sortingReleaseDate;
+	delete sortingLatestDate;
+	delete sortingTerm;
+}
+
+void Decide()
+{
+	int number;
+	int quantity;
+	int newQuantity = 0;
+	cout << "Enter the quantity of the item: ";
+	cin >> quantity;
+	while (quantity <= 0)
+	{
+		cout << "Re-enter the quantity of the item: ";
+		cin >> quantity;
+	}
+	vector<product> Items;
+	product temp;
+	product CreatItems;
+	for (int i = 0; i < quantity; i++)
+		Items.push_back(temp);
+	for (int i = 0; i < quantity; i++)
+	{
+		inputStruct(CreatItems);
+		Items[i] = CreatItems;
+	}
+	showStruct(Items, quantity);
+	addStruct(Items, quantity, newQuantity);
+	searchStruct(Items, newQuantity);
+	sortingStruct(Items, newQuantity);
+}
+int main()
+{
+	Decide();
+	return 0;
+}
